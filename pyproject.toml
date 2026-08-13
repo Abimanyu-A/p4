@@ -1,0 +1,46 @@
+[project]
+name = "p4"
+version = "0.1.0"
+description = "P4 — Proof-Driven Vulnerability Validation Platform: a multi-stage agentic SAST engine (Prepare -> Scan -> Validate -> Prove)."
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "fastapi==0.141.1",
+    "uvicorn[standard]==0.52.2",
+    "pydantic==2.13.4",
+    "semgrep==1.172.0",
+    "google-genai==2.18.0",
+    "python-dotenv==1.2.2",
+    "requests==2.34.2",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest==8.3.4",
+    "pytest-cov==6.0.0",
+    "ruff==0.9.4",
+    "httpx==0.28.1",
+]
+
+[project.scripts]
+p4 = "backend.cli:main"
+
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+include = ["backend*"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "UP", "B"]
+# E501: line length isn't worth churn here. UP042: str+Enum (not StrEnum) is
+# intentional — Finding.to_dict() relies on plain str equality/serialization.
+ignore = ["E501", "UP042"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
