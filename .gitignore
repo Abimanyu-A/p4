@@ -10,3 +10,6 @@ node_modules/
 htmlcov/
 .coverage
 *.sarif
+
+# Internal-only, never committed: kept locally, not pushed.
+docs/TEAM.md
