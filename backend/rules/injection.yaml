@@ -1,0 +1,61 @@
+rules:
+  - id: python-raw-sql-execute
+    languages: [python]
+    severity: ERROR
+    message: >-
+      A raw value is passed to a SQL execute() call. If any part of it
+      originates from user input without parameterization, this is SQL
+      injection.
+    pattern: $CUR.execute($Q)
+    metadata:
+      vuln_class: injection
+      cwe: "CWE-89: SQL Injection"
+
+  - id: python-os-system-call
+    languages: [python]
+    severity: ERROR
+    message: >-
+      os.system() executes a string in a shell. If any part of the string is
+      influenced by external input, this is command injection.
+    pattern: os.system(...)
+    metadata:
+      vuln_class: injection
+      cwe: "CWE-78: OS Command Injection"
+
+  - id: python-subprocess-call
+    languages: [python]
+    severity: WARNING
+    message: >-
+      A subprocess is spawned here. Verify no attacker-controlled data
+      reaches the command or its arguments.
+    pattern-either:
+      - pattern: subprocess.run(...)
+      - pattern: subprocess.Popen(...)
+      - pattern: subprocess.call(...)
+    metadata:
+      vuln_class: injection
+      cwe: "CWE-78: OS Command Injection"
+
+  - id: js-child-process-call
+    languages: [javascript]
+    severity: WARNING
+    message: >-
+      A child process is spawned here. Verify no attacker-controlled data
+      reaches the command or its arguments.
+    pattern-either:
+      - pattern: exec(...)
+      - pattern: execFile(...)
+    metadata:
+      vuln_class: injection
+      cwe: "CWE-78: OS Command Injection"
+
+  - id: js-string-built-sql
+    languages: [javascript]
+    severity: ERROR
+    message: >-
+      A SQL string is passed to a query() call. If it was built by string
+      concatenation of user input, this is SQL injection.
+    pattern: $DB.query($SQL, ...)
+    metadata:
+      vuln_class: injection
+      cwe: "CWE-89: SQL Injection"

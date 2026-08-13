@@ -1,0 +1,45 @@
+rules:
+  - id: python-eval-usage
+    languages: [python]
+    severity: WARNING
+    message: >-
+      eval() executes its argument as Python code. Verify the argument can
+      never be influenced by external input.
+    pattern: eval(...)
+    metadata:
+      vuln_class: insecure_deserialization
+      cwe: "CWE-502: Deserialization of Untrusted Data"
+
+  - id: python-pickle-loads
+    languages: [python]
+    severity: ERROR
+    message: >-
+      pickle.loads() can execute arbitrary code while deserializing.
+      Untrusted bytes reaching this sink is remote code execution.
+    pattern: pickle.loads(...)
+    metadata:
+      vuln_class: insecure_deserialization
+      cwe: "CWE-502: Deserialization of Untrusted Data"
+
+  - id: python-yaml-load
+    languages: [python]
+    severity: ERROR
+    message: >-
+      yaml.load() can instantiate arbitrary Python objects unless restricted
+      to a safe loader. Untrusted YAML reaching this sink is remote code
+      execution.
+    pattern: yaml.load(...)
+    metadata:
+      vuln_class: insecure_deserialization
+      cwe: "CWE-502: Deserialization of Untrusted Data"
+
+  - id: js-eval-usage
+    languages: [javascript]
+    severity: WARNING
+    message: >-
+      eval() executes its argument as JavaScript code. Verify the argument
+      can never be influenced by external input.
+    pattern: eval(...)
+    metadata:
+      vuln_class: insecure_deserialization
+      cwe: "CWE-502: Deserialization of Untrusted Data"

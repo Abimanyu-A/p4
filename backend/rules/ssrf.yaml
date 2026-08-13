@@ -1,0 +1,28 @@
+rules:
+  - id: python-requests-outbound
+    languages: [python]
+    severity: WARNING
+    message: >-
+      An outbound HTTP request is made here. If the URL is influenced by
+      external input without an allowlist, this is SSRF.
+    pattern-either:
+      - pattern: requests.get(...)
+      - pattern: requests.post(...)
+      - pattern: urllib.request.urlopen(...)
+    metadata:
+      vuln_class: ssrf
+      cwe: "CWE-918: Server-Side Request Forgery"
+
+  - id: js-outbound-http-call
+    languages: [javascript]
+    severity: WARNING
+    message: >-
+      An outbound HTTP request is made here. If the URL is influenced by
+      external input without an allowlist, this is SSRF.
+    pattern-either:
+      - pattern: axios.get(...)
+      - pattern: axios.post(...)
+      - pattern: http.get(...)
+    metadata:
+      vuln_class: ssrf
+      cwe: "CWE-918: Server-Side Request Forgery"
