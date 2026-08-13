@@ -1,0 +1,10 @@
+{
+  "name": "vuln-express-api",
+  "version": "1.0.0",
+  "description": "Sample vulnerable Express API used as a scan target for the SAST engine demo.",
+  "main": "app.js",
+  "dependencies": {
+    "express": "^4.19.2",
+    "axios": "^1.7.2"
+  }
+}

@@ -1,0 +1,122 @@
+{
+  "_readme": "Ground truth for the 3 sample repos. Each entry's 'tag' matches a '--- TAG ---' marker comment placed directly above the vulnerable/benign line in the source file it lives in. The evaluation harness locates the nearest tag above a Semgrep match to score it. 'dedup_group' marks findings that should be merged by the Validate stage's cross-repo dedup as the same underlying vulnerability class.",
+  "findings": [
+    {
+      "tag": "FLASK-SQLI-1",
+      "repo": "vuln_flask_api",
+      "file": "app.py",
+      "vuln_class": "injection",
+      "ground_truth": "true_positive",
+      "dedup_group": null,
+      "severity": "critical"
+    },
+    {
+      "tag": "FLASK-CMDI-1",
+      "repo": "vuln_flask_api",
+      "file": "app.py",
+      "vuln_class": "injection",
+      "ground_truth": "true_positive",
+      "dedup_group": null,
+      "severity": "critical"
+    },
+    {
+      "tag": "FLASK-DESER-1",
+      "repo": "vuln_flask_api",
+      "file": "app.py",
+      "vuln_class": "insecure_deserialization",
+      "ground_truth": "true_positive",
+      "dedup_group": null,
+      "severity": "critical"
+    },
+    {
+      "tag": "FLASK-SSRF-1",
+      "repo": "vuln_flask_api",
+      "file": "app.py",
+      "vuln_class": "ssrf",
+      "ground_truth": "true_positive",
+      "dedup_group": "ssrf-user-controlled-outbound-request",
+      "severity": "high"
+    },
+    {
+      "tag": "FLASK-DESER-FP-1",
+      "repo": "vuln_flask_api",
+      "file": "app.py",
+      "vuln_class": "insecure_deserialization",
+      "ground_truth": "false_positive",
+      "dedup_group": null,
+      "severity": "n/a"
+    },
+    {
+      "tag": "FLASK-SQLI-FP-1",
+      "repo": "vuln_flask_api",
+      "file": "app.py",
+      "vuln_class": "injection",
+      "ground_truth": "false_positive",
+      "dedup_group": null,
+      "severity": "n/a"
+    },
+    {
+      "tag": "WORKER-SSRF-1",
+      "repo": "vuln_flask_worker",
+      "file": "worker.py",
+      "vuln_class": "ssrf",
+      "ground_truth": "true_positive",
+      "dedup_group": "ssrf-user-controlled-outbound-request",
+      "severity": "high"
+    },
+    {
+      "tag": "WORKER-DESER-1",
+      "repo": "vuln_flask_worker",
+      "file": "worker.py",
+      "vuln_class": "insecure_deserialization",
+      "ground_truth": "true_positive",
+      "dedup_group": null,
+      "severity": "critical"
+    },
+    {
+      "tag": "WORKER-CMDI-FP-1",
+      "repo": "vuln_flask_worker",
+      "file": "worker.py",
+      "vuln_class": "injection",
+      "ground_truth": "false_positive",
+      "dedup_group": null,
+      "severity": "n/a"
+    },
+    {
+      "tag": "EXPRESS-SQLI-1",
+      "repo": "vuln_express_api",
+      "file": "routes/orders.js",
+      "vuln_class": "injection",
+      "ground_truth": "true_positive",
+      "dedup_group": null,
+      "severity": "critical"
+    },
+    {
+      "tag": "EXPRESS-CMDI-1",
+      "repo": "vuln_express_api",
+      "file": "routes/orders.js",
+      "vuln_class": "injection",
+      "ground_truth": "true_positive",
+      "dedup_group": null,
+      "severity": "critical"
+    },
+    {
+      "tag": "EXPRESS-SSRF-1",
+      "repo": "vuln_express_api",
+      "file": "routes/orders.js",
+      "vuln_class": "ssrf",
+      "ground_truth": "true_positive",
+      "dedup_group": "ssrf-user-controlled-outbound-request",
+      "severity": "high"
+    },
+    {
+      "tag": "EXPRESS-CMDI-FP-1",
+      "repo": "vuln_express_api",
+      "file": "routes/orders.js",
+      "vuln_class": "injection",
+      "ground_truth": "false_positive",
+      "dedup_group": null,
+      "severity": "n/a"
+    }
+  ]
+}
