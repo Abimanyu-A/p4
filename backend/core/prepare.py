@@ -77,7 +77,7 @@ def _prepare_python_file(path: Path, rel: str) -> tuple[FileNode, list[Entrypoin
             node.imports.extend(a.name for a in item.names)
         elif isinstance(item, ast.ImportFrom) and item.module:
             node.imports.append(item.module)
-        elif isinstance(item, (ast.FunctionDef, ast.AsyncFunctionDef)):
+        elif isinstance(item, ast.FunctionDef | ast.AsyncFunctionDef):
             node.functions.append(item.name)
             for dec in item.decorator_list:
                 dec_src = ast.unparse(dec) if hasattr(ast, "unparse") else ""
