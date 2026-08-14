@@ -47,7 +47,7 @@ function VerdictStamp({ finding }: { finding: Finding }) {
   }
   if (finding.approval_status === "approved") {
     return (
-      <span className="stamp" style={{ color: "var(--brand)" }}>
+      <span className="stamp" style={{ color: "var(--accent)" }}>
         <span className="stamp-dot" />
         Fix approved
       </span>
@@ -81,7 +81,7 @@ export function FindingCard({ finding, expanded, onToggle, onApprove }: FindingC
       <button
         type="button"
         onClick={onToggle}
-        className="flex w-full cursor-pointer items-center gap-3 border-none bg-transparent px-4 py-3 text-left"
+        className="flex w-full cursor-pointer items-center gap-3 border-none bg-transparent px-5 py-4 text-left"
       >
         <span
           className="ink-muted flex-none text-xs transition-transform duration-150"
@@ -100,7 +100,7 @@ export function FindingCard({ finding, expanded, onToggle, onApprove }: FindingC
         {finding.dedup_group_id && (
           <span
             className="font-mono hidden shrink-0 rounded-full border px-2 py-0.5 text-[0.66rem] sm:inline-block"
-            style={{ borderColor: "var(--brand)", color: "var(--brand)" }}
+            style={{ borderColor: "var(--gold)", color: "var(--gold)" }}
             title="Same vulnerability class merged across repos"
           >
             {finding.is_dedup_primary ? "dedup primary" : "dedup dup"}
@@ -118,7 +118,7 @@ export function FindingCard({ finding, expanded, onToggle, onApprove }: FindingC
       </button>
 
       {expanded && (
-        <div className="grid grid-cols-1 gap-4 border-t px-4 py-4 lg:grid-cols-2" style={{ borderColor: "var(--border)" }}>
+        <div className="grid grid-cols-1 gap-6 border-t px-5 py-6 lg:grid-cols-2" style={{ borderColor: "var(--border)" }}>
           <div>
             <h4 className="ink-secondary mb-1.5 text-[0.72rem] font-semibold tracking-wide uppercase">Code</h4>
             <CodeBlock code={finding.code_snippet} />
@@ -130,7 +130,7 @@ export function FindingCard({ finding, expanded, onToggle, onApprove }: FindingC
               <span className="h-1 flex-1 max-w-16 rounded-full" style={{ background: "var(--gridline)" }}>
                 <span
                   className="block h-full rounded-full"
-                  style={{ width: `${confidencePct}%`, background: "var(--brand)" }}
+                  style={{ width: `${confidencePct}%`, background: "var(--gold)" }}
                 />
               </span>
               <span className="tabular normal-case">{confidencePct}%</span>
@@ -179,7 +179,7 @@ export function FindingCard({ finding, expanded, onToggle, onApprove }: FindingC
                 </>
               )}
               {finding.approval_status === "approved" && (
-                <span className="stamp" style={{ color: "var(--brand)" }}>
+                <span className="stamp" style={{ color: "var(--accent)" }}>
                   <span className="stamp-dot" />
                   Approved by human reviewer
                 </span>

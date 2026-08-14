@@ -45,11 +45,11 @@ export function ComparisonPanel({ report, findings }: ComparisonPanelProps) {
         </div>
         <div className="mb-3 flex gap-4 text-[0.74rem]">
           <span className="ink-secondary flex items-center gap-1.5">
-            <span className="inline-block h-2.5 w-2.5 rounded-sm" style={{ background: "var(--baseline)" }} />
+            <span className="inline-block h-2.5 w-2.5 rounded-sm" style={{ background: "var(--chart-baseline)" }} />
             Baseline (raw scan)
           </span>
           <span className="ink-secondary flex items-center gap-1.5">
-            <span className="inline-block h-2.5 w-2.5 rounded-sm" style={{ background: "var(--brand)" }} />
+            <span className="inline-block h-2.5 w-2.5 rounded-sm" style={{ background: "var(--chart-pipeline)" }} />
             P4 (LLM-validated)
           </span>
         </div>
@@ -66,16 +66,16 @@ export function ComparisonPanel({ report, findings }: ComparisonPanelProps) {
                   <div key={key} className="grid grid-cols-[64px_1fr_40px] items-center gap-3">
                     <div className="text-[0.78rem] font-medium">{label}</div>
                     <div className="flex flex-col gap-1" role="img" aria-label={`${label}: baseline ${baselineVal}%, P4 ${pipelineVal}%`}>
-                      <div className="h-2 rounded-full" style={{ background: "var(--baseline-wash)" }}>
+                      <div className="h-2 rounded-full" style={{ background: "var(--chart-baseline-wash)" }}>
                         <div
                           className="h-full rounded-full transition-all duration-500"
-                          style={{ width: `${baselineVal}%`, background: "var(--baseline)" }}
+                          style={{ width: `${baselineVal}%`, background: "var(--chart-baseline)" }}
                         />
                       </div>
-                      <div className="h-2 rounded-full" style={{ background: "var(--brand-wash)" }}>
+                      <div className="h-2 rounded-full" style={{ background: "var(--chart-pipeline-wash)" }}>
                         <div
                           className="h-full rounded-full transition-all duration-500"
-                          style={{ width: `${pipelineVal}%`, background: "var(--brand)" }}
+                          style={{ width: `${pipelineVal}%`, background: "var(--chart-pipeline)" }}
                         />
                       </div>
                     </div>
@@ -121,7 +121,7 @@ export function ComparisonPanel({ report, findings }: ComparisonPanelProps) {
         label="Cross-repo dedup"
         value={report ? String(report.cross_repo_dedup_groups) : "—"}
         sub="vulnerability groups merged across repos"
-        accent="var(--brand)"
+        accent="var(--accent)"
       />
       <StatTile
         label="Confirmed / total"

@@ -72,9 +72,9 @@ export function FindingsList({ findings, onApprove }: FindingsListProps) {
                 onClick={() => setFilter(key)}
                 className="font-mono cursor-pointer rounded-full border px-3 py-1 text-[0.72rem] transition-colors"
                 style={{
-                  borderColor: active ? "var(--brand)" : "var(--border)",
-                  background: active ? "var(--brand-wash)" : "transparent",
-                  color: active ? "var(--brand)" : "var(--ink-secondary)",
+                  borderColor: active ? "var(--gold)" : "var(--border)",
+                  background: active ? "var(--accent-wash)" : "transparent",
+                  color: active ? "var(--gold)" : "var(--ink-secondary)",
                 }}
               >
                 {label}
@@ -95,7 +95,7 @@ export function FindingsList({ findings, onApprove }: FindingsListProps) {
         </div>
       )}
 
-      <div className="flex flex-col gap-2">
+      <div className="flex flex-col gap-3">
         {sorted.map((f) => (
           <FindingCard
             key={f.id}

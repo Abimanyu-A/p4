@@ -9,6 +9,8 @@ from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
+from starlette.exceptions import HTTPException as StarletteHTTPException
+from starlette.types import Scope
 
 from backend.core import store
 from backend.core.defectdojo import sync_to_defectdojo
@@ -113,5 +115,19 @@ def health():
     return {"status": "ok"}
 
 
+class SPAStaticFiles(StaticFiles):
+    """Falls back to index.html for unknown paths so client-side routes
+    (e.g. /dashboard) work on a direct navigation or page refresh, not just
+    when reached via an in-app Link click."""
+
+    async def get_response(self, path: str, scope: Scope):
+        try:
+            return await super().get_response(path, scope)
+        except StarletteHTTPException as exc:
+            if exc.status_code == 404:
+                return await super().get_response("index.html", scope)
+            raise
+
+
 if FRONTEND_DIR.exists():
-    app.mount("/", StaticFiles(directory=str(FRONTEND_DIR), html=True), name="frontend")
+    app.mount("/", SPAStaticFiles(directory=str(FRONTEND_DIR), html=True), name="frontend")

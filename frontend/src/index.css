@@ -5,10 +5,10 @@
 @import "@fontsource/ibm-plex-sans/500.css";
 @import "@fontsource/ibm-plex-sans/600.css";
 @import "@fontsource/ibm-plex-sans/700.css";
-/* Source Serif 4 — report-style headers, the "case file" voice */
-@import "@fontsource/source-serif-4/500.css";
-@import "@fontsource/source-serif-4/600.css";
-@import "@fontsource/source-serif-4/700.css";
+/* Playfair Display — editorial-luxury headers */
+@import "@fontsource/playfair-display/500.css";
+@import "@fontsource/playfair-display/600.css";
+@import "@fontsource/playfair-display/700.css";
 /* IBM Plex Mono — code, file paths, ids, rule names */
 @import "@fontsource/ibm-plex-mono/400.css";
 @import "@fontsource/ibm-plex-mono/500.css";
@@ -16,34 +16,62 @@
 :root {
   color-scheme: light;
 
-  /* neutrals — validated dataviz reference palette, shared by chrome + charts */
-  --page: #f9f9f7;
-  --surface: #fcfcfb;
+  /* Black & beige luxury system */
+  --ink: #111111;
+  --ink-ink: #ffffff; /* text on top of --ink */
+  --page: #f8f4ee;
+  --beige-soft: #fcfaf7;
+  --beige-dark: #d9cfc1;
+  --card: #ffffff;
+  --surface: #ffffff;
   --surface-raised: #ffffff;
-  --ink-primary: #0b0b0b;
-  --ink-secondary: #52514e;
-  --ink-muted: #898781;
-  --gridline: #e1e0d9;
-  --border: rgba(11, 11, 11, 0.1);
-  --border-strong: rgba(11, 11, 11, 0.18);
 
-  /* brand — P4's own identity, kept out of the security-status palette */
-  --brand: #2a78d6;
-  --brand-ink: #ffffff;
-  --brand-wash: #eaf2fc;
+  --ink-primary: #111111;
+  --ink-secondary: #6b6b6b;
+  --ink-muted: #9a9a9a;
+  --gridline: #e5ddd3;
+  --border: #e5ddd3;
+  --border-strong: #d9cfc1;
 
-  /* baseline-scan series (comparison chart) */
-  --baseline: #eb6834;
-  --baseline-wash: #fdece2;
+  /* fixed navbar chrome — deliberately NOT theme-reactive. The nav stays
+     black in both light and dark mode, same as the reference luxury-SaaS
+     layouts (a permanently-dark sidebar/nav regardless of page theme). */
+  --nav-bg: #111111;
+  --nav-ink: #ffffff;
+  --nav-ink-muted: rgba(242, 237, 228, 0.72);
+  --nav-border: rgba(242, 237, 228, 0.16);
+
+  /* accent — used sparingly: highlights, active states, KPIs. Never buttons
+     (buttons are --ink/black) and never security-severity signal (that's
+     the reserved status palette below). */
+  --gold: #8b7355;
+  --gold-light: #b59b7a;
+  --gold-ink: #ffffff; /* text/icons on top of a --gold background */
+  --brand: var(--ink);
+  --brand-ink: var(--ink-ink);
+  --brand-wash: rgba(17, 17, 17, 0.06);
+  --accent: var(--gold);
+  --accent-wash: rgba(139, 115, 85, 0.12);
+
+  /* comparison-chart series — kept decoupled from the site accent on
+     purpose: this pair is CVD-validated for distinctness (dataviz skill),
+     which matters more here than matching the brand palette. */
+  --chart-pipeline: #2a78d6;
+  --chart-baseline: #eb6834;
+  --chart-pipeline-wash: #eaf2fc;
+  --chart-baseline-wash: #fdece2;
 
   /* status — reserved, never reused for identity */
   --status-critical: #d03b3b;
   --status-serious: #ec835a;
-  --status-warning: #fab219;
-  --status-good: #0ca30c;
-  --status-good-text: #006300;
+  --status-warning: #b8842f;
+  --status-good: #3f6b4a;
+  --status-good-text: #3f6b4a;
 
-  --font-display: "Source Serif 4", Georgia, serif;
+  --shadow-sm: 0 8px 24px rgba(17, 17, 17, 0.05);
+  --shadow-lg: 0 20px 60px rgba(17, 17, 17, 0.08);
+
+  --font-display: "Playfair Display", Georgia, serif;
   --font-body: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
   --font-mono: "IBM Plex Mono", ui-monospace, "Cascadia Code", Menlo, monospace;
 }
@@ -51,61 +79,102 @@
 :root:not([data-theme="light"]) {
   @media (prefers-color-scheme: dark) {
     color-scheme: dark;
-    --page: #0d0d0d;
-    --surface: #1a1a19;
-    --surface-raised: #202020;
-    --ink-primary: #ffffff;
-    --ink-secondary: #c3c2b7;
-    --ink-muted: #898781;
-    --gridline: #2c2c2a;
-    --border: rgba(255, 255, 255, 0.1);
-    --border-strong: rgba(255, 255, 255, 0.18);
+    --ink: #f2ede4;
+    --ink-ink: #141210;
+    --page: #141210;
+    --beige-soft: #1c1815;
+    --beige-dark: #2b241d;
+    --card: #1c1815;
+    --surface: #1c1815;
+    --surface-raised: #221d19;
 
-    --brand: #3987e5;
-    --brand-ink: #ffffff;
-    --brand-wash: #132840;
+    --ink-primary: #f2ede4;
+    --ink-secondary: #b8ada0;
+    --ink-muted: #85796c;
+    --gridline: #33291f;
+    --border: #33291f;
+    --border-strong: #443627;
 
-    --baseline: #d95926;
-    --baseline-wash: #3a2417;
+    --gold: #c2a06f;
+    --gold-light: #d4b98c;
+    --gold-ink: #141210;
+    --brand: var(--ink);
+    --brand-ink: var(--ink-ink);
+    --brand-wash: rgba(242, 237, 228, 0.08);
+    --accent: var(--gold);
+    --accent-wash: rgba(194, 160, 111, 0.14);
+
+    --chart-pipeline: #3987e5;
+    --chart-baseline: #d95926;
+    --chart-pipeline-wash: #132840;
+    --chart-baseline-wash: #3a2417;
 
     --status-critical: #e66767;
     --status-serious: #ec835a;
-    --status-warning: #fab219;
-    --status-good: #0ca30c;
-    --status-good-text: #0ca30c;
+    --status-warning: #d9a441;
+    --status-good: #6ea87a;
+    --status-good-text: #6ea87a;
+
+    --shadow-sm: 0 8px 24px rgba(0, 0, 0, 0.25);
+    --shadow-lg: 0 20px 60px rgba(0, 0, 0, 0.35);
   }
 }
 
 :root[data-theme="dark"] {
   color-scheme: dark;
-  --page: #0d0d0d;
-  --surface: #1a1a19;
-  --surface-raised: #202020;
-  --ink-primary: #ffffff;
-  --ink-secondary: #c3c2b7;
-  --ink-muted: #898781;
-  --gridline: #2c2c2a;
-  --border: rgba(255, 255, 255, 0.1);
-  --border-strong: rgba(255, 255, 255, 0.18);
+  --ink: #f2ede4;
+  --ink-ink: #141210;
+  --page: #141210;
+  --beige-soft: #1c1815;
+  --beige-dark: #2b241d;
+  --card: #1c1815;
+  --surface: #1c1815;
+  --surface-raised: #221d19;
 
-  --brand: #3987e5;
-  --brand-ink: #ffffff;
-  --brand-wash: #132840;
+  --ink-primary: #f2ede4;
+  --ink-secondary: #b8ada0;
+  --ink-muted: #85796c;
+  --gridline: #33291f;
+  --border: #33291f;
+  --border-strong: #443627;
 
-  --baseline: #d95926;
-  --baseline-wash: #3a2417;
+  --gold: #c2a06f;
+  --gold-light: #d4b98c;
+  --gold-ink: #141210;
+  --brand: var(--ink);
+  --brand-ink: var(--ink-ink);
+  --brand-wash: rgba(242, 237, 228, 0.08);
+  --accent: var(--gold);
+  --accent-wash: rgba(194, 160, 111, 0.14);
+
+  --chart-pipeline: #3987e5;
+  --chart-baseline: #d95926;
+  --chart-pipeline-wash: #132840;
+  --chart-baseline-wash: #3a2417;
 
   --status-critical: #e66767;
   --status-serious: #ec835a;
-  --status-warning: #fab219;
-  --status-good: #0ca30c;
-  --status-good-text: #0ca30c;
+  --status-warning: #d9a441;
+  --status-good: #6ea87a;
+  --status-good-text: #6ea87a;
+
+  --shadow-sm: 0 8px 24px rgba(0, 0, 0, 0.25);
+  --shadow-lg: 0 20px 60px rgba(0, 0, 0, 0.35);
 }
 
 @theme {
   --font-display: var(--font-display);
   --font-body: var(--font-body);
   --font-mono: var(--font-mono);
+
+  /* Softer, more generous radius scale — the luxury system leans rounder
+     than the old technical-flat one. Overriding Tailwind's own theme keys
+     means every existing rounded-md/rounded-lg/rounded-xl in components
+     picks this up automatically. */
+  --radius-sm: 10px;
+  --radius-md: 16px;
+  --radius-lg: 24px;
+  --radius-xl: 32px;
 }
 
 * {
@@ -127,11 +196,11 @@ body {
 }
 
 ::selection {
-  background: var(--brand-wash);
+  background: var(--accent-wash);
 }
 
 :focus-visible {
-  outline: 2px solid var(--brand);
+  outline: 2px solid var(--gold);
   outline-offset: 2px;
 }
 
@@ -149,10 +218,12 @@ body {
 .surface {
   background: var(--surface);
   border: 1px solid var(--border);
+  box-shadow: var(--shadow-sm);
 }
 .surface-raised {
   background: var(--surface-raised);
   border: 1px solid var(--border-strong);
+  box-shadow: var(--shadow-lg);
 }
 .ink-primary {
   color: var(--ink-primary);
@@ -184,7 +255,7 @@ body {
   letter-spacing: 0.06em;
   text-transform: uppercase;
   padding: 0.28em 0.6em;
-  border-radius: 3px;
+  border-radius: var(--radius-sm);
   border: 1.5px solid currentColor;
   white-space: nowrap;
 }

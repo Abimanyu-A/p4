@@ -46,14 +46,14 @@ export function Stepper({ run, findings }: StepperProps) {
   }
 
   return (
-    <section className="surface rounded-lg px-5 py-4">
-      <div className="mb-4 flex items-center justify-between">
+    <section className="surface rounded-lg px-6 py-6">
+      <div className="mb-5 flex items-center justify-between">
         <span className="font-display text-sm font-semibold">Pipeline</span>
         <span className="font-mono text-[0.76rem]" style={{ color: statusColor }}>
           {run && !run.error && run.stage !== "done" && (
             <span
               className="mr-1.5 inline-block h-2 w-2 animate-pulse rounded-full align-middle"
-              style={{ background: "var(--brand)" }}
+              style={{ background: "var(--gold)" }}
             />
           )}
           {statusText}
@@ -64,7 +64,7 @@ export function Stepper({ run, findings }: StepperProps) {
         <div className="absolute top-4 right-4 left-4 h-0.5" style={{ background: "var(--gridline)" }}>
           <div
             className="h-full transition-all duration-500"
-            style={{ width: `${fillPct}%`, background: "var(--brand)" }}
+            style={{ width: `${fillPct}%`, background: "var(--gold)" }}
           />
         </div>
         <div className="relative grid grid-cols-4 gap-2">
@@ -76,9 +76,9 @@ export function Stepper({ run, findings }: StepperProps) {
                 <div
                   className="font-mono flex h-8 w-8 items-center justify-center rounded-full border-2 text-[0.78rem] font-semibold"
                   style={{
-                    background: done || active ? "var(--brand)" : "var(--surface)",
-                    borderColor: done || active ? "var(--brand)" : "var(--gridline)",
-                    color: done || active ? "var(--brand-ink)" : "var(--ink-muted)",
+                    background: done || active ? "var(--gold)" : "var(--surface)",
+                    borderColor: done || active ? "var(--gold)" : "var(--gridline)",
+                    color: done || active ? "var(--gold-ink)" : "var(--ink-muted)",
                   }}
                 >
                   {i + 1}
