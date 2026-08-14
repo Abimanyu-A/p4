@@ -11,6 +11,31 @@ interface FindingCardProps {
   onApprove: (finding: Finding) => Promise<void>;
 }
 
+function VerificationBadge({ finding }: { finding: Finding }) {
+  if (finding.verified === true) {
+    return (
+      <span className="stamp" style={{ color: "var(--status-good-text)" }}>
+        <span className="stamp-dot" />
+        Verified in sandbox
+      </span>
+    );
+  }
+  if (finding.verified === false) {
+    return (
+      <span className="stamp" style={{ color: "var(--status-warning)" }}>
+        <span className="stamp-dot" />
+        Not reproduced
+      </span>
+    );
+  }
+  return (
+    <span className="stamp" style={{ color: "var(--ink-muted)" }}>
+      <span className="stamp-dot" />
+      Unverified
+    </span>
+  );
+}
+
 function VerdictStamp({ finding }: { finding: Finding }) {
   if (finding.verdict === "false_positive") {
     return (
@@ -117,14 +142,20 @@ export function FindingCard({ finding, expanded, onToggle, onApprove }: FindingC
 
           {finding.poc && (
             <div className="lg:col-span-2">
-              <h4 className="ink-secondary mb-1.5 text-[0.72rem] font-semibold tracking-wide uppercase">
-                Proof of concept
-              </h4>
+              <div className="mb-1.5 flex flex-wrap items-center gap-2">
+                <h4 className="ink-secondary text-[0.72rem] font-semibold tracking-wide uppercase">
+                  Proof of concept
+                </h4>
+                <VerificationBadge finding={finding} />
+              </div>
               <pre className="font-mono surface m-0 overflow-x-auto rounded-md p-3 text-[0.76rem] leading-relaxed" style={{ background: "var(--page)" }}>
                 {finding.poc}
               </pre>
               {finding.poc_explanation && (
                 <p className="ink-secondary mt-1.5 text-[0.76rem]">{finding.poc_explanation}</p>
+              )}
+              {finding.verification_detail && (
+                <p className="ink-secondary mt-1.5 text-[0.76rem]">{finding.verification_detail}</p>
               )}
             </div>
           )}

@@ -23,8 +23,14 @@ and design rationale. This file covers setup and running.
    context and decides whether it's really exploitable, clearing false
    positives a pattern-matcher can't. It also assigns a canonical vulnerability
    signature used to **dedupe the same vulnerability class across repos**.
-4. **Prove** — for every confirmed finding, the LLM generates a concrete,
-   runnable proof-of-concept.
+4. **Prove** — for every confirmed finding, the LLM writes a concrete
+   proof-of-concept narrative. For P4's own sample repos, this is backed by
+   real evidence, not just LLM text: `backend/core/verify.py` builds and
+   runs an isolated, throwaway container of the actual target app and
+   exploits the finding for real (an out-of-band callback for SSRF/command
+   injection/deserialization RCE, a differential response check for SQL
+   injection) — `finding.verified` reflects whether it actually reproduced,
+   not whether the model said it would.
 
 Cross-cutting: a **human-approval gate** (a fix patch is only generated after
 a reviewer clicks Approve), **SLA-breach badges** on confirmed findings older

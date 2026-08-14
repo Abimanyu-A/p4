@@ -19,8 +19,9 @@ Think of it like a tip line for a detective agency:
 flowchart LR
     A["1. Prepare\nmap the building"] --> B["2. Scan\ncollect every tip"]
     B --> C["3. Validate\ndetective investigates\neach tip"]
-    C --> D["4. Prove\nwrite up how the\ncrime would actually happen"]
-    D --> E["Human reviewer\napproves a fix"]
+    C --> D["4. Prove\nwrite up how the\ncrime would happen"]
+    D --> V["...then actually try it\nin a sandboxed copy\nof the building"]
+    V --> E["Human reviewer\napproves a fix"]
 ```
 
 1. **Prepare** — before looking for problems, P4 reads through the target
@@ -46,12 +47,24 @@ flowchart LR
    recognized as "the same issue" instead of three separate tickets. This is
    `backend/core/validate.py` + `backend/core/dedupe.py`.
 
-4. **Prove** — for every finding the model actually confirmed, it writes a
-   runnable proof: a `curl` command or input string that would trigger the
-   bug for real, not just a theoretical description. This turns "the model
-   says this is dangerous" into "here's the exact request that breaks it,"
-   which is much easier for a human to double check. This is
-   `backend/core/prove.py`.
+4. **Prove** — for every finding the model actually confirmed, the LLM
+   writes a human-readable proof narrative (`backend/core/prove.py`): a
+   `curl` command or input string that would trigger the bug, plus a plain-
+   English explanation. For P4's own sample repos, this narrative is backed
+   by real evidence, not just an LLM's word for it: `backend/core/verify.py`
+   builds and runs a fresh, isolated container of the actual vulnerable app
+   and exploits the finding for real — a small, fixed exploitation routine
+   per rule (not another LLM guess, on purpose: a wrong guess here is
+   exactly the kind of mistake this stage exists to catch). SSRF and command-
+   injection/deserialization findings are confirmed via an out-of-band
+   callback (the sandboxed app makes a real network request back to a
+   listener P4 controls); SQL injection is confirmed by comparing a normal
+   request against an injected one and checking for a real behavioral
+   difference. A finding's `verified` field is `true`/`false` when this ran,
+   or `null` when no sandbox exists for that repo (the case for any
+   externally-scanned target — P4 has no way to know how to build and run
+   arbitrary user code) or Docker isn't available; verification failures
+   degrade gracefully and never take down the rest of the pipeline.
 
 **Nothing gets auto-fixed.** A confirmed finding sits in an
 "awaiting approval" state until a human clicks *Approve*, and only then
@@ -108,7 +121,7 @@ makes P4 *worse* at telling real bugs from fake ones, the build fails.
 
 | Folder | What's in it |
 |---|---|
-| `backend/core/` | The four pipeline stages, plus dedup, evaluation, SARIF/SLA/DefectDojo helpers |
+| `backend/core/` | The four pipeline stages, `verify.py`'s sandboxed exploitation, dedup, evaluation, SARIF/SLA/DefectDojo helpers |
 | `backend/api/` | The FastAPI service behind the dashboard |
 | `backend/cli.py` | The `p4` command-line tool |
 | `backend/rules/` | The Semgrep pattern rules used in the Scan stage |

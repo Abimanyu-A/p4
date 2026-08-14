@@ -27,6 +27,9 @@ export interface Finding {
   poc: string | null;
   poc_explanation: string | null;
 
+  verified: boolean | null;
+  verification_detail: string | null;
+
   first_seen: number;
   approval_status: ApprovalStatus;
   fix_patch: string | null;

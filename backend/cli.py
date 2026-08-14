@@ -22,6 +22,7 @@ from .core.sarif import build_sarif
 from .core.scan import scan_repo
 from .core.severity import meets_minimum
 from .core.validate import validate_findings
+from .core.verify import verify_findings
 
 NAME = "p4"
 VERSION = "0.1.0"
@@ -45,6 +46,7 @@ def _run_pipeline(targets: dict[str, str], *, validate: bool, prove: bool) -> li
 
     if prove and findings:
         prove_findings(findings)
+        verify_findings(findings)
 
     return findings
 
@@ -176,7 +178,9 @@ def build_parser() -> argparse.ArgumentParser:
     scan.add_argument(
         "--prove",
         action="store_true",
-        help="Also generate proof-of-concepts for confirmed findings (extra LLM calls).",
+        help="Also generate proof-of-concepts for confirmed findings (extra LLM calls) and, "
+        "for P4's own sample repos, attempt real sandboxed exploitation to verify them "
+        "(requires Docker; degrades gracefully to unverified without it).",
     )
     scan.add_argument(
         "--min-severity",

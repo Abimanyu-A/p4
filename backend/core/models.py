@@ -59,6 +59,12 @@ class Finding:
     poc: str | None = None
     poc_explanation: str | None = None
 
+    # Verify stage output: real, sandboxed exploitation of the finding.
+    # None means "not attempted" (no sandbox registered, or Docker
+    # unavailable) — distinct from False ("attempted, did not reproduce").
+    verified: bool | None = None
+    verification_detail: str | None = None
+
     # Lifecycle / SLA / approval
     first_seen: float = field(default_factory=time.time)
     approval_status: ApprovalStatus = ApprovalStatus.NOT_APPLICABLE

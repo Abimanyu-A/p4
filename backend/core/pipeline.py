@@ -13,6 +13,7 @@ from .prepare import prepare_repo
 from .prove import generate_fix, prove_findings
 from .scan import scan_repo
 from .validate import validate_findings
+from .verify import verify_findings
 
 # Backdated for the SLA-breach demo: these two, if confirmed, are made to
 # look like they've been sitting unresolved for >72h.
@@ -45,10 +46,11 @@ def run_pipeline(run_id: str, repo_paths: dict[str, str]) -> None:
         dedupe_findings(findings)
         store.save_findings(findings)
 
-        # --- Prove ---
+        # --- Prove (+ real sandboxed verification, best-effort) ---
         run.stage = Stage.PROVE
         store.save_run(run)
         prove_findings(findings)
+        verify_findings(findings)
         for f in findings:
             if f.verdict == ValidationVerdict.CONFIRMED:
                 f.approval_status = ApprovalStatus.AWAITING_APPROVAL
