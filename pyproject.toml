@@ -1,7 +1,7 @@
 [project]
 name = "p4"
 version = "0.1.0"
-description = "P4 — Proof-Driven Vulnerability Validation Platform: a multi-stage agentic SAST engine (Prepare -> Scan -> Validate -> Prove)."
+description = "P4 - Proof-Driven Vulnerability Validation Platform: a multi-stage agentic SAST engine (Prepare -> Scan -> Validate -> Prove)."
 readme = "README.md"
 requires-python = ">=3.11"
 dependencies = [
