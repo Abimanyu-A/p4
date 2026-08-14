@@ -32,6 +32,14 @@ build-backend = "setuptools.build_meta"
 [tool.setuptools.packages.find]
 include = ["backend*"]
 
+[tool.setuptools.package-data]
+# backend/rules/*.yaml isn't a Python package (no __init__.py), so
+# packages.find above doesn't pick it up — without this, a non-editable
+# `pip install` (e.g. action.yml's `pip install github.action_path`) silently
+# ships with zero Semgrep rules: Scan finds nothing, Validate never runs,
+# and the gate passes with nothing to report instead of failing.
+backend = ["rules/*.yaml"]
+
 [tool.ruff]
 line-length = 100
 target-version = "py312"
