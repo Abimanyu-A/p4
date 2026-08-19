@@ -62,11 +62,19 @@ Open `http://localhost:8000`, select which sample repos to scan, and click
 **Run Scan**. A full run against all three sample repos takes ~2 minutes
 (Gemini's free tier is rate-limited; the client retries automatically).
 
+
 ## Run as a CI/CD security gate - the `p4` CLI
 
 `pip install -e .` also installs a `p4` command that runs the same pipeline
 headlessly against a repo path and exits non-zero if it finds a confirmed
 vulnerability - no dashboard, no clicking, just an exit code and a report:
+### Quick CLI workflow
+
+The CLI can be used locally before pushing code or as part of an automated CI/CD pipeline.
+
+```text
+Source Code → p4 scan . → P4 Pipeline → Security Findings → PASS / FAIL
+```
 
 ```bash
 # Scan the current checked-out repo; fails the build on any confirmed finding.
